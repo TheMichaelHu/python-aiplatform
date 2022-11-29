@@ -37,7 +37,7 @@ AUTOML_TABULAR_PIPELINE = "automl_tabular"
 
 _PIPELINE_TEMPLATES = {
     MODEL_COMPARISON_PIPELINE: (
-        "https://raw.githubusercontent.com/TheMichaelHu/pipelines/mh-update-compare/components"
+        "https://raw.githubusercontent.com/TheMichaelHu/pipelines/mh-update-compare-2/components"
         "/google-cloud/google_cloud_pipeline_components/experimental/automl/tabular"
         "/model_comparison_pipeline.json"
     ),
@@ -132,15 +132,17 @@ class ModelComparisonJob(pipeline_based_service._VertexAiPipelineBasedService):
     @classmethod
     def submit(
         cls,
-        problem_type: str,
+        prediction_type: str,
         training_jobs: Dict[str, Dict[str, Any]],
         pipeline_root: str,
         data_source_csv_filenames: str = "",
         data_source_bigquery_table_path: str = "",
+        evaluation_data_source_csv_filenames: str = "",
+        evaluation_data_source_bigquery_table_path: str = "",
         job_id: Optional[str] = None,
         comparison_pipeline_display_name: Optional[str] = None,
-        service_account: Optional[str] = None,
-        network: Optional[str] = None,
+        service_account: Optional[str] = "",
+        network: Optional[str] = "",
         project: Optional[str] = None,
         location: Optional[str] = None,
         experiment: Optional[str] = "",
@@ -150,24 +152,31 @@ class ModelComparisonJob(pipeline_based_service._VertexAiPipelineBasedService):
 
         Example usage:
         my_comparison = _ModelComparisonJob.submit(
-            problem_type='tabular',
+            prediction_type='regression',
             training_jobs={},
-            data_source_bigquery_table_path=bq:,
+            data_source_bigquery_table_path='project.dataset.table',
             data_source_csv_filenames='',
+            evaluation_data_source_bigquery_table_path='project.dataset.table',
             pipeline_root=os.path.join(BUCKET_URI, DISPLAY_NAME),
         )
 
         Args:
-            problem_type: Required. The type of problem being solved. Can be one of: regression,
-                binary_classification, multiclass_classification, or forecasting
+            prediction_type: Required. The type of problem being solved. Can be one of: regression,
+                classification, or forecasting
             training_jobs: Required. A dict mapping name to a dict of training job inputs.
             pipeline_root (str):
                 Required. The GCS directory to store output from the model comparison PipelineJob.
-            data_source_csv_filenames: Paths to CSVs stored in GCS to use as the dataset
+            data_source_csv_filenames: Paths to CSVs stored in GCS to use as the training dataset
                 for all training pipelines. This should be None if
                 `data_source_bigquery_table_path` is not None.
             data_source_bigquery_table_path: Path to BigQuery Table to use as the
-                dataset for all training pipelines. This should be None if
+                training dataset for all training pipelines. This should be None if
+                `data_source_csv_filenames` is not None.
+            evaluation_data_source_csv_filenames: Paths to CSVs stored in GCS to use as the evaluation dataset
+                for all training pipelines. This should be None if
+                `data_source_bigquery_table_path` is not None.
+            evaluation_data_source_bigquery_table_path: Path to BigQuery Table to use as the
+                evaluation dataset for all training pipelines. This should be None if
                 `data_source_csv_filenames` is not None.
             job_id (str):
                 Optional. The unique ID of the job run.
@@ -207,11 +216,15 @@ class ModelComparisonJob(pipeline_based_service._VertexAiPipelineBasedService):
             "project": project or initializer.global_config.project,
             "location": location or initializer.global_config.location,
             "root_dir": pipeline_root,
-            "problem_type": problem_type,
+            "prediction_type": prediction_type,
             "training_jobs": training_jobs,
             "data_source_csv_filenames": data_source_csv_filenames,
             "data_source_bigquery_table_path": data_source_bigquery_table_path,
+            "evaluation_data_source_csv_filenames": data_source_csv_filenames,
+            "evaluation_data_source_bigquery_table_path": data_source_bigquery_table_path,
             "experiment": experiment,
+            "network": network,
+            "service_account": service_account,
         }
 
         template_url = cls.get_template_url(MODEL_COMPARISON_PIPELINE)
