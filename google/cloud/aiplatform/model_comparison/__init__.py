@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,4 +15,8 @@
 # limitations under the License.
 #
 
-__version__ = "1.23.0rc4"
+from google.cloud.aiplatform.model_comparison.model_comparison_job import (
+    ModelComparisonJob,
+)
+
+__all__ = ("ModelComparisonJob",)

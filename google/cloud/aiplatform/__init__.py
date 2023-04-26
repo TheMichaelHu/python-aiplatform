@@ -42,6 +42,9 @@ from google.cloud.aiplatform.matching_engine import (
     MatchingEngineIndex,
     MatchingEngineIndexEndpoint,
 )
+from google.cloud.aiplatform.model_comparison import (
+    ModelComparisonJob,
+)
 from google.cloud.aiplatform import metadata
 from google.cloud.aiplatform.tensorboard import uploader_tracker
 from google.cloud.aiplatform.models import Endpoint
