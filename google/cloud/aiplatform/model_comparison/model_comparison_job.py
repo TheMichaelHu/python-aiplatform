@@ -52,20 +52,41 @@ _TEMPLATE_GALLERY_TEMPLATE = (
     "https://us-kfp.pkg.dev/ml-pipeline/google-cloud-registry/{template}"
     "/{{version}}")
 _PIPELINE_TEMPLATES = {
+    # AUTOML_TABULAR_PIPELINE: (
+        # _TEMPLATE_GALLERY_TEMPLATE.format(template="automl-tabular")),
+    # TABNET_TRAINER_PIPELINE: (
+        # _TEMPLATE_GALLERY_TEMPLATE.format(
+            # template="automl-tabular-tabnet-trainer")),
+    # TABNET_HYPERPARAMETER_TUNING_JOB_PIPELINE: (
+        # _TEMPLATE_GALLERY_TEMPLATE.format(
+            # template="automl-tabular-tabnet-hyperparameter-tuning-job")),
+    # WIDE_AND_DEEP_TRAINER_PIPELINE: (
+        # _TEMPLATE_GALLERY_TEMPLATE.format(
+            # template="automl-tabular-wide-and-deep-trainer")),
+    # WIDE_AND_DEEP_HYPERPARAMETER_TUNING_JOB_PIPELINE: (
+        # _TEMPLATE_GALLERY_TEMPLATE.format(
+            # template="automl-tabular-wide-and-deep-hyperparameter-tuning-job")),
     AUTOML_TABULAR_PIPELINE: (
-        _TEMPLATE_GALLERY_TEMPLATE.format(template="automl-tabular")),
+        _GITHUB_TEMPLATE.format(
+            stage="v1",
+            template="tabular/automl_tabular_pipeline.yaml")),
     TABNET_TRAINER_PIPELINE: (
-        _TEMPLATE_GALLERY_TEMPLATE.format(
-            template="automl-tabular-tabnet-trainer")),
+        _GITHUB_TEMPLATE.format(
+            stage="preview",
+            template="tabular/tabnet_trainer_pipeline.yaml")),
     TABNET_HYPERPARAMETER_TUNING_JOB_PIPELINE: (
-        _TEMPLATE_GALLERY_TEMPLATE.format(
-            template="automl-tabular-tabnet-hyperparameter-tuning-job")),
+        _GITHUB_TEMPLATE.format(
+            stage="preview",
+            template="tabular/tabnet_hyperparameter_tuning_job_pipeline.yaml")),
     WIDE_AND_DEEP_TRAINER_PIPELINE: (
-        _TEMPLATE_GALLERY_TEMPLATE.format(
-            template="automl-tabular-wide-and-deep-trainer")),
+        _GITHUB_TEMPLATE.format(
+            stage="preview",
+            template="tabular/wide_and_deep_trainer_pipeline.yaml")),
     WIDE_AND_DEEP_HYPERPARAMETER_TUNING_JOB_PIPELINE: (
-        _TEMPLATE_GALLERY_TEMPLATE.format(
-            template="automl-tabular-wide-and-deep-hyperparameter-tuning-job")),
+        _GITHUB_TEMPLATE.format(
+            stage="preview",
+            template="tabular"
+            "/wide_and_deep_hyperparameter_tuning_job_pipeline.yaml")),
     XGBOOST_HYPERPARAMETER_TUNING_JOB_PIPELINE: (
         _GITHUB_TEMPLATE.format(
             stage="preview",
@@ -75,11 +96,10 @@ _PIPELINE_TEMPLATES = {
         _GITHUB_TEMPLATE.format(
             stage="preview",
             template="tabular/xgboost_trainer_pipeline.yaml")),
+    # Experimental pipelines aren't in GCPC.
     MODEL_COMPARISON_PIPELINE: (
-        _GITHUB_TEMPLATE.format(
-            stage="experimental",
-            template="tabular/model_comparison_pipeline.yaml")
-    ).format(version="2.0.0b4"),  # Experimental pipelines were removed.
+        "gs://automl-tables-model-comparison/pipelines/tabular"
+        "/model_comparison_pipeline.json"),
     BQML_ARIMA_TRAIN_PIPELINE: (
         _GITHUB_TEMPLATE.format(
             stage="v1",
