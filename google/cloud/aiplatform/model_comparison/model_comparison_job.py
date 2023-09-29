@@ -49,8 +49,8 @@ _GITHUB_TEMPLATE = (
     "google-cloud-pipeline-components-{{version}}/components/google-cloud/"
     "google_cloud_pipeline_components/{stage}/automl/{template}")
 _TEMPLATE_GALLERY_TEMPLATE = (
-    "https://us-kfp.pkg.dev/ml-pipeline/google-cloud-registry/automl-tabular"
-    "/{template}/{{version}}")
+    "https://us-kfp.pkg.dev/ml-pipeline/google-cloud-registry/{template}"
+    "/{{version}}")
 _PIPELINE_TEMPLATES = {
     AUTOML_TABULAR_PIPELINE: (
         _TEMPLATE_GALLERY_TEMPLATE.format(template="automl-tabular")),
